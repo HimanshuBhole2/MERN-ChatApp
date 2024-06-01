@@ -4,6 +4,8 @@ const {chats} = require("./data/data.js");
 const connectDB = require("./config/db.js");
 const color = require("colors")
 const userRoutes = require("./routes/userRoutes.js")
+const {errorHandler,notFound} = require("./middleware/errorMiddleware.js")
+
 // mongodb+srv://bholehimanshu50:<password>@cluster0.giox8if.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 app = express();
@@ -33,6 +35,8 @@ const PORT = process.env.PORT;
 
 app.use('/api/user',userRoutes);
 
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(PORT,(req,res)=>{
     console.log(`The server is start working at\n http://localhost:${PORT}`.yellow.bold)

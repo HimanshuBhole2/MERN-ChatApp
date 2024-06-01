@@ -2,22 +2,143 @@ import React, { useState } from 'react';
 import {VStack} from "@chakra-ui/layout";
 import {Input,InputGroup,InputRightElement} from "@chakra-ui/input";
 import {FormControl,FormLabel} from "@chakra-ui/form-control";
-import {Button} from "@chakra-ui/react";
-
+import {Button, position} from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
+import {useHistory} from "react-router-dom"
+import axios  from 'axios';
 
 const Singup=()=>{
     const [show, setShow] = useState(false);
     const [name,setName] = useState();
     const [email,setEmail] = useState();
     const [confirmpassword,setConfirmpassword] = useState();
+    const [loading,setLoading] = useState(false);
     const [password,setPassword] = useState();
     const [pic,setPic] = useState();
+    const toast = useToast()
+
+    const history = useHistory();
 
       const handleClick = () => setShow(!show);
-    
-      const postDetails = (pics)=>{ };
+    // Uploading of images
+      const postDetails = async(pics)=>{ 
+        setLoading(true);
+        if(pics === undefined){
+          toast({
+            title: 'Please Select An Image',
+            description: "Image is Not Selected,Please Select An Image",
+            status: 'warning',
+            duration: 9000,
+            isClosable: true,
+            position: "bottom",
+          });
+          setLoading(false);
 
-      const submitHandler =() =>{}
+          return;
+        }
+
+        if(pics.type === "image/jpeg" || pics.type=="image/png" || pics.type=="image/jpg"){
+          const data = new FormData();
+          data.append("file",pics);
+          data.append("upload_preset","chat-app");
+          data.append("cloud_name","dovxt5sgb");
+          await fetch("https://api.cloudinary.com/v1_1/dovxt5sgb/image/upload",{
+            method: "post",
+            body: data,
+          }).then((res)=>res.json())
+            .then(async (data)=>{
+             await setPic(data.url.toString());
+             console.log(pic);
+              toast({
+                title: 'Image Upload Successful',
+                description: "Congrajulation!!! Image Upload Successfully!!!",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+                position: "bottom",
+              })
+              setLoading(false);
+
+            }).catch((err)=>{
+              console.log(err);
+              setLoading(false);
+            })
+        }else{
+          toast({
+            title: 'Image Upload Failed',
+            description: "Image Upload Get Failed Upload Image only Jpg,Jpeg and png Please Try again",
+            status: 'warning',
+            duration: 9000,
+            isClosable: true,
+            position: "bottom",
+          });
+          setLoading(false);
+
+        }
+      };
+
+      // Submit details
+      const submitHandler =async() =>{
+        setLoading(true);
+        if(!name || !email || !password || !confirmpassword){
+          toast({
+            title: 'Any Field Is Missing',
+            description: "Any Of the Feild is Missing, Please Check Again",
+            status: 'warning',
+            duration: 9000,
+            isClosable: true,
+            position: "top",
+          });
+          setLoading(false);
+          return;
+        }
+
+        // Password Password
+         if(password !== confirmpassword){
+          toast({
+            title: 'Password Not Matching!!',
+            description: "Please Check Password Again!!",
+            status: 'warning',
+            duration: 9000,
+            isClosable: true,
+            position: "top",
+          });
+          return;
+         }
+
+         try{
+          const config = {
+            headers:{
+              "Content-type":"application/json",
+            },
+          };
+          const {data} = await axios.post("/api/user",{name,email,password,pic},
+            config
+          );
+          toast({
+            title: 'Image Upload Successful',
+            description: "Congrajulation!!! Registration Successfully !!!",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+            position: "bottom",
+          })
+
+          localStorage.setItem("userInfo",JSON.stringify(data));
+          setLoading(false);
+          history.push("/chats")
+         } catch(error){
+          toast({
+            title: 'Image Upload Successful',
+            description: error.response.data.message,
+            status: 'warning',
+            duration: 9000,
+            isClosable: true,
+            position: "bottom",
+          })
+         }
+        
+        }
 
     return (
       <VStack spacing='5px'>
@@ -101,6 +222,7 @@ const Singup=()=>{
         width="100%"
         style={{marginTop:15}}
         onClick = {submitHandler}
+        isLoading = {loading}
         >
         Signup
         </Button>
