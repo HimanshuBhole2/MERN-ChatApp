@@ -3,7 +3,11 @@ const dotenv = require("dotenv");
 const {chats} = require("./data/data.js");
 const connectDB = require("./config/db.js");
 const color = require("colors")
+ 
+
+// Required The routes
 const userRoutes = require("./routes/userRoutes.js")
+const chatRoutes = require("./routes/chatRoutes.js")
 const {errorHandler,notFound} = require("./middleware/errorMiddleware.js")
 
 // mongodb+srv://bholehimanshu50:<password>@cluster0.giox8if.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
@@ -34,6 +38,8 @@ const PORT = process.env.PORT;
 
 
 app.use('/api/user',userRoutes);
+app.use('/api/chat',chatRoutes);
+
 
 app.use(notFound)
 app.use(errorHandler)

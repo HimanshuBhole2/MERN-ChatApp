@@ -91,6 +91,7 @@ const Login = () =>{
             <FormLabel >Email </FormLabel>
             <Input
             plceholder='Enter Your Email'
+            value={email}
             onChange={(e)=> setEmail(e.target.value)}
             ></Input>
 
@@ -104,6 +105,7 @@ const Login = () =>{
 
               type={show? "text":'password'}
               plceholder='Type Your Password'
+              value={password}
               onChange={(e)=> setPassword(e.target.value)}
 
               ></Input>
@@ -133,7 +135,7 @@ const Login = () =>{
         width="100%"
         style={{marginTop:15}}
         onClick = {()=>{
-          setEmail("guest@example.com");
+          setEmail("guest@gmail.com");
           setPassword("123456");
         }}
         >

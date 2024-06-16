@@ -5,7 +5,6 @@ const User = require('../model/userModel');
 const router = express.Router();
 const {protect} = require("../middleware/authMiddleware");
 
-
 router.route('/')
     .post(asyncHandler(async (req,res)=>{
     await userControllers.registerUser(req, res); // Call the registerUser function
