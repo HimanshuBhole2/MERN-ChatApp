@@ -110,7 +110,7 @@ const createGroupChat = async(req,res)=>{
 }
 
 
-// TO rename the gruop
+// TO rename the gruopp"
 const renameGroup = async(req,res) =>{
     const { chatId, chatname } = req.body;
 
