@@ -96,7 +96,7 @@ const createGroupChat = async(req,res)=>{
         const groupChat = await Chat.create({
             chatname: req.body.name,
             users: users,
-            isGroupChat: true,
+            isGroupedChat: true,
             groupAdmin: req.user,
         });
 
