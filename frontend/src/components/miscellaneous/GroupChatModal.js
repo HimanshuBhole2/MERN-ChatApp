@@ -11,7 +11,7 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
 import {useState,} from "react"
-import { useToast,Input } from '@chakra-ui/react'
+import { useToast,Input,Spinner } from '@chakra-ui/react'
 import { ChatState } from '../../Context/ChatProvider';
 import { FormControl } from '@chakra-ui/form-control'
 import axios from 'axios';
@@ -176,8 +176,14 @@ const GroupChatModal = ({ children }) => {
                     ))}
                 </Box>
                 {/* render Searched User */}
-                {loading ? (<div>Loading</div>):
-                (
+                {loading ? (<Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='blue.500'
+                    size='xl'
+                    />
+                ):(
                     searchResult?.slice(0,4).map((user)=>(
                         <UserListItem
                             key={user._id}

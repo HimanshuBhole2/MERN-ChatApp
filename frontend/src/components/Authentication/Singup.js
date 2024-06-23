@@ -4,7 +4,7 @@ import {Input,InputGroup,InputRightElement} from "@chakra-ui/input";
 import {FormControl,FormLabel} from "@chakra-ui/form-control";
 import {Button, position} from "@chakra-ui/react";
 import { useToast } from '@chakra-ui/react'
-import {useHistory} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import axios  from 'axios';
 
 const Singup=()=>{
@@ -17,7 +17,7 @@ const Singup=()=>{
     const [pic,setPic] = useState();
     const toast = useToast()
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
       const handleClick = () => setShow(!show);
     // Uploading of images
@@ -48,7 +48,6 @@ const Singup=()=>{
           }).then((res)=>res.json())
             .then(async (data)=>{
              await setPic(data.url.toString());
-             console.log(pic);
               toast({
                 title: 'Image Upload Successful',
                 description: "Congrajulation!!! Image Upload Successfully!!!",
@@ -73,7 +72,6 @@ const Singup=()=>{
             position: "bottom",
           });
           setLoading(false);
-
         }
       };
 
@@ -103,6 +101,7 @@ const Singup=()=>{
             isClosable: true,
             position: "top",
           });
+          setLoading(false)
           return;
          }
 
@@ -116,7 +115,7 @@ const Singup=()=>{
             config
           );
           toast({
-            title: 'Image Upload Successful',
+            title: 'Registration Done Successfully',
             description: "Congrajulation!!! Registration Successfully !!!",
             status: 'success',
             duration: 9000,
@@ -126,7 +125,7 @@ const Singup=()=>{
 
           localStorage.setItem("userInfo",JSON.stringify(data));
           setLoading(false);
-          history.push("/chats")
+          navigate("/chats")
          } catch(error){
           toast({
             title: 'Image Upload Successful',

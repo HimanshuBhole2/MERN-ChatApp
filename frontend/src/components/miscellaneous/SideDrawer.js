@@ -21,7 +21,7 @@ import {ChatState} from '../../Context/ChatProvider';
 import ProfileModal from './ProfileModal';
 import ChatLoading from '../ChatLoading';
 import UserListItem from '../UserAvatar/UserListItem';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -34,13 +34,13 @@ const SideDrawer = () => {
     const [loadingChat,setLoadingChat] = useState();
 
     const {user, setSelectedChat,chats,setChats} = ChatState();
-    const history = useHistory();
+    const navigate = useNavigate();
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const logoutHandler = () =>{
       localStorage.removeItem("userInfo");
-      history.push("/");
+      navigate("/");
     }
 
     const handleSearch = async() => {

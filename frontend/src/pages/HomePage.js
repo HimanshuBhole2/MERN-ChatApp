@@ -14,17 +14,17 @@ import {
 
   import Login from '../components/Authentication/Login';
   import Singup from '../components/Authentication/Singup';
-import { useHistory } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 const HomePage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(()=> {
       const user = JSON.parse(localStorage.getItem("userInfo"));
 
-      if(user) history.push("/chats");
-  }, [history]);
+      if(user) navigate("/chats");
+  }, [navigate]);
 
 
   return (

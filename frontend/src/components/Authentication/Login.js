@@ -4,7 +4,7 @@ import {Input,InputGroup,InputRightElement} from "@chakra-ui/input";
 import {FormControl,FormLabel} from "@chakra-ui/form-control";
 import {Button} from "@chakra-ui/react";
 import { useToast } from '@chakra-ui/react'
-import {useHistory} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import axios  from 'axios';
 
 const Login = () =>{
@@ -17,7 +17,7 @@ const Login = () =>{
 
   const toast = useToast()
 
-  const history = useHistory();
+  const navigate = useNavigate();
   // Event Listner 
   const handleClick = () => setShow(!show);
     
@@ -62,11 +62,11 @@ const Login = () =>{
     });
     localStorage.setItem("userInfo", JSON.stringify(data));
     setLoading(false);
-    history.push("/chats");
+    navigate("/chats");
   } catch (error) {
     toast({
       title: "Error Occoured",
-      description: "Any Of the Feild is Missing, Please Check Again",
+      description: "Email or Password Not Matching",
       status: 'warning',
       duration: 9000,
       isClosable: true,
