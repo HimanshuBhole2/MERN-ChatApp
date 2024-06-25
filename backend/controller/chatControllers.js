@@ -151,6 +151,7 @@ const addToGroup  = async(req,res)=>{
     res.status(404);
     throw new Error("Chat Not Found")
    } else {
+    console.log("done")
     res.json(added);
    }
 }
