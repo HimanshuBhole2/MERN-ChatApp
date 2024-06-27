@@ -9,18 +9,16 @@ const chatSchema = mongoose.Schema({
             ref:"User"
         }
     ],
-    letestMessage:[
-        {
+    letestMessage:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"Message"
         }
-    ],
-    groupAdmin:[
-        {
+    ,
+    groupAdmin:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"User"
-        }
-    ]
+    }
+    
 
 },
 {
